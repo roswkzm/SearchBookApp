@@ -1,13 +1,11 @@
-package com.example.searchbook
+package com.example.searchbook.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.searchbook.R
 import com.example.searchbook.databinding.ActivityMainBinding
-import com.example.searchbook.ui.view.FavoriteFragment
-import com.example.searchbook.ui.view.SearchFragment
-import com.example.searchbook.ui.view.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
