@@ -17,6 +17,7 @@ buildscript {
         okhttp_version = "4.9.3"
         lifecycle_ktx = "2.4.1"
         coroutine_version = "1.6.1"
+        glide_version = "4.13.2"
     }
 }
 

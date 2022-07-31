@@ -29,11 +29,6 @@ class MainActivity : AppCompatActivity() {
         val factory = BookSearchViewModelFactory(bookSearchRepository)
         viewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 
-        viewModel.searchBooks("android")
-
-        viewModel.searchResult.observe(this, Observer { data ->
-            Log.d("ㅎㅇㅎㅇ", data.toString())
-        })
         setContentView(binding.root)
     }
 
