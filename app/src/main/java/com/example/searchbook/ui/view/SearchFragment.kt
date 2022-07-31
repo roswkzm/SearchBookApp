@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchbook.R
@@ -48,6 +49,12 @@ class SearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             adapter = bookPreviewAdapter
+        }
+
+        // BookDetailFragment로 book 정보 넘기면서 이동
+        bookPreviewAdapter.setOnItemClickListener {
+            val action = SearchFragmentDirections.actionFragmentSearchToFragmentBookDetail(it)
+            findNavController().navigate(action)
         }
     }
 

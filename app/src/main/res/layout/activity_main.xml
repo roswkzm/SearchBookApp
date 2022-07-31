@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="androidx.navigation.fragment.NavHostFragment"
-                app:defaultNavHost="false"
+                app:defaultNavHost="true"
                 app:navGraph="@navigation/booksearch_nav_graph"/>
 
         </FrameLayout>
