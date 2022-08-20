@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentBookDetailBinding
 import com.example.searchbook.databinding.FragmentSearchBinding
+import com.example.searchbook.ui.viewmodel.BookSearchViewModel
 
 class BookDetailFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class BookDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args by navArgs<BookDetailFragmentArgs>()
+    private lateinit var bookSearchViewModel: BookSearchViewModel
 
     private val mWebView by lazy { binding.webView }
 
@@ -33,7 +35,7 @@ class BookDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        bookSearchViewModel = (activity as MainActivity).viewModel
 
         val book = args.book
         mWebView.apply {
@@ -43,6 +45,11 @@ class BookDetailFragment : Fragment() {
         }
 
         backPressEvent()
+
+        binding.btnFavorite.setOnClickListener {
+            bookSearchViewModel.saveBook(book)
+            Toast.makeText(context, "Favorite Book Save", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun backPressEvent(){

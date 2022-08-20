@@ -19,9 +19,10 @@ data class Book(
     val contents: String,       // 도서 소개
     @field:Json(name = "datetime")
     val datetime: String,       // 도서 출판날짜, ISO 8601 형식
-    @field:Json(name = "isbn")
-    @PrimaryKey(autoGenerate = true)
+
+    @PrimaryKey(autoGenerate = false)
     val isbn: String,       // 국제 표준 도서번호
+
     @field:Json(name = "price")
     val price: Int,     // 도서 정가
     @field:Json(name = "publisher")

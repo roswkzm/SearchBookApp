@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.searchbook.R
+import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.databinding.ActivityMainBinding
 import com.example.searchbook.repository.BookSearchRepositoryImpl
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
@@ -28,7 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         setUpJetpackNavigation()
 
-        val bookSearchRepository = BookSearchRepositoryImpl()
+        val database = AppDatabase.getInstance(this)
+        val bookSearchRepository = BookSearchRepositoryImpl(database)
         val factory = BookSearchViewModelFactory(bookSearchRepository, this)
         viewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 
