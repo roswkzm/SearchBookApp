@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,6 +20,9 @@ import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentFavoriteBinding
 import com.example.searchbook.ui.adapter.BookPreviewAdapter
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
+import com.example.searchbook.util.collectLatestStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class FavoriteFragment : Fragment() {
 
@@ -38,10 +44,19 @@ class FavoriteFragment : Fragment() {
 
         initUI()
         setupTouchHelper(view)
+//        // StateFlow 구독
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+//                bookSearchViewModel.favoriteBooks.collectLatest {
+//                    bookPreviewAdapter.submitList(it)
+//                }
+//            }
+//        }
 
-        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner, Observer { books ->
-            bookPreviewAdapter.submitList(books)
-        })
+        // 확장 함수로 사용
+        collectLatestStateFlow(bookSearchViewModel.favoriteBooks){
+            bookPreviewAdapter.submitList(it)
+        }
     }
 
     private fun initUI(){
