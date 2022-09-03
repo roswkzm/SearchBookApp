@@ -1,9 +1,11 @@
 package com.example.searchbook.ui.view
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +18,15 @@ import com.example.searchbook.databinding.ActivityMainBinding
 import com.example.searchbook.repository.BookSearchRepositoryImpl
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
 import com.example.searchbook.ui.viewmodel.BookSearchViewModelFactory
+import com.example.searchbook.util.Constants.DATASTORE_NAME
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     lateinit var viewModel : BookSearchViewModel
     private lateinit var navController : NavController
+
+    private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setUpJetpackNavigation()
 
         val database = AppDatabase.getInstance(this)
-        val bookSearchRepository = BookSearchRepositoryImpl(database)
+        val bookSearchRepository = BookSearchRepositoryImpl(database, dataStore)
         val factory = BookSearchViewModelFactory(bookSearchRepository, this)
         viewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 

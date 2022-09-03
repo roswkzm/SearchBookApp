@@ -5,11 +5,9 @@ import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.SearchResponse
 import com.example.searchbook.repository.BookSearchRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BookSearchViewModel(
     private val bookSearchRepository: BookSearchRepository,
@@ -21,7 +19,7 @@ class BookSearchViewModel(
 
     fun searchBooks(query : String){
         viewModelScope.launch(Dispatchers.IO){
-            val response = bookSearchRepository.SearchBooks(query, "accuracy", 1, 15)
+            val response = bookSearchRepository.SearchBooks(query, getSortMode(), 1, 15)
             if (response.isSuccessful){
                 response.body()?.let { body ->
                     _searchResult.postValue(body)
@@ -54,6 +52,17 @@ class BookSearchViewModel(
     init {
         query = savedStateHandle.get<String>(SAVE_STATE_KEY) ?: ""
     }
+
+    // DataStore
+    fun saveSortMode(value : String) {
+        viewModelScope.launch(Dispatchers.IO){
+            bookSearchRepository.saveSortMode(value)
+        }
+    }
+
+    suspend fun getSortMode() = withContext(Dispatchers.IO){
+            bookSearchRepository.getSortMode().first()
+        }
 
     companion object{
         private const val SAVE_STATE_KEY = "query"
