@@ -5,11 +5,15 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.SearchResponse
 import com.example.searchbook.network.RetrofitInstance.api
 import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
+import com.example.searchbook.util.Constants.PAGING_SIZE
 import com.example.searchbook.util.Sort
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -66,5 +70,18 @@ class BookSearchRepositoryImpl(
             .map { perfs ->
                 perfs[SORT_MODE] ?: Sort.ACCURACY.value
             }
+    }
+
+    // Paging
+    override fun getFavoritePagingBooks(): Flow<PagingData<Book>> {
+        val pagingSourceFactory = {db.bookSearchDao().getFavoritePagingBooks()}
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGING_SIZE,
+                enablePlaceholders = false,
+                maxSize = PAGING_SIZE * 3
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
 }

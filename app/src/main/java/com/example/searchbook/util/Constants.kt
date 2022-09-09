@@ -7,6 +7,8 @@ object Constants {
     const val API_KEY = BuildConfig.bookApiKey
     const val SEARCH_BOOK_TIME_DELAY = 100L
     const val DATASTORE_NAME = "preferences_datastore"
+    const val PAGING_SIZE = 15
+
 }
 
 enum class Sort(val value : String){

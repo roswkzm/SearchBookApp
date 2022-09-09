@@ -1,5 +1,6 @@
 package com.example.searchbook.data.db
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.searchbook.data.model.Book
 import kotlinx.coroutines.flow.Flow
@@ -16,5 +17,6 @@ interface BookSearchDao {
     @Query("SELECT * FROM books")
     fun getFavoriteBooks() : Flow<List<Book>>
 
-
+    @Query("SELECT * FROM books")
+    fun getFavoritePagingBooks() : PagingSource<Int, Book>
 }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentFavoriteBinding
 import com.example.searchbook.ui.adapter.BookPreviewAdapter
+import com.example.searchbook.ui.adapter.BookSearchPagingAdapter
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
 import com.example.searchbook.util.collectLatestStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,7 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bookSearchViewModel : BookSearchViewModel
-    private lateinit var bookPreviewAdapter: BookPreviewAdapter
+    private lateinit var bookSearchAdapter: BookSearchPagingAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite, container, false)
@@ -54,22 +55,22 @@ class FavoriteFragment : Fragment() {
 //        }
 
         // 확장 함수로 사용
-        collectLatestStateFlow(bookSearchViewModel.favoriteBooks){
-            bookPreviewAdapter.submitList(it)
+        collectLatestStateFlow(bookSearchViewModel.favoritePagingBooks){
+            bookSearchAdapter.submitData(it)
         }
     }
 
     private fun initUI(){
-        bookPreviewAdapter = BookPreviewAdapter()
+        bookSearchAdapter = BookSearchPagingAdapter()
         binding.rvFavoriteBook.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-            adapter = bookPreviewAdapter
+            adapter = bookSearchAdapter
         }
 
         // BookDetailFragment로 book 정보 넘기면서 이동
-        bookPreviewAdapter.setOnItemClickListener {
+        bookSearchAdapter.setOnItemClickListener {
             val action = SearchFragmentDirections.actionFragmentSearchToFragmentBookDetail(it)
             findNavController().navigate(action)
         }
@@ -93,11 +94,15 @@ class FavoriteFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                val book = bookPreviewAdapter.currentList[position]
-                bookSearchViewModel.deleteBook(book)
-                Toast.makeText(context, "Book has Delete", Toast.LENGTH_SHORT).show()
-
+                val position = viewHolder.bindingAdapterPosition
+//                val book = bookSearchAdapter.currentList[position]
+//                bookSearchViewModel.deleteBook(book)
+//                Toast.makeText(context, "Book has Delete", Toast.LENGTH_SHORT).show()
+                val pagedBook = bookSearchAdapter.peek(position)
+                pagedBook?.let { book ->
+                    bookSearchViewModel.deleteBook(book)
+                    Toast.makeText(context, "Book has Delete", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         ItemTouchHelper(itemTouchHelperCallback).apply {
