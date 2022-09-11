@@ -16,8 +16,10 @@ import com.example.searchbook.R
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.databinding.FragmentSearchBinding
 import com.example.searchbook.ui.adapter.BookPreviewAdapter
+import com.example.searchbook.ui.adapter.BookSearchPagingAdapter
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
 import com.example.searchbook.util.Constants.SEARCH_BOOK_TIME_DELAY
+import com.example.searchbook.util.collectLatestStateFlow
 
 class SearchFragment : Fragment() {
 
@@ -25,7 +27,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bookSearchViewModel: BookSearchViewModel
-    private lateinit var bookPreviewAdapter : BookPreviewAdapter
+    private lateinit var bookSearchAdapter : BookSearchPagingAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
@@ -43,26 +45,30 @@ class SearchFragment : Fragment() {
     }
 
     private fun initUI(){
-        bookPreviewAdapter = BookPreviewAdapter()
+        bookSearchAdapter = BookSearchPagingAdapter()
         binding.rvSearchBooks.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-            adapter = bookPreviewAdapter
+            adapter = bookSearchAdapter
         }
 
         // BookDetailFragment로 book 정보 넘기면서 이동
-        bookPreviewAdapter.setOnItemClickListener {
+        bookSearchAdapter.setOnItemClickListener {
             val action = SearchFragmentDirections.actionFragmentSearchToFragmentBookDetail(it)
             findNavController().navigate(action)
         }
     }
 
     private fun observeViewModel(){
-        bookSearchViewModel.searchResult.observe(viewLifecycleOwner, Observer { searchResponse ->
-            val books : List<Book> = searchResponse.documents
-            bookPreviewAdapter.submitList(books)
-        })
+//        bookSearchViewModel.searchResult.observe(viewLifecycleOwner, Observer { searchResponse ->
+//            val books : List<Book> = searchResponse.documents
+//            bookSearchAdapter.submitList(books)
+//        })
+
+        collectLatestStateFlow(bookSearchViewModel.searchPagingResult){
+            bookSearchAdapter.submitData(it)
+        }
     }
 
     private fun searchBooks(){
@@ -78,7 +84,7 @@ class SearchFragment : Fragment() {
                 text.let {
                     val query = it.toString().trim()
                     if (query.isNotEmpty()){
-                        bookSearchViewModel.searchBooks(query)
+                        bookSearchViewModel.searchBooksPaging(query)
                         bookSearchViewModel.query = query
                     }
                 }
