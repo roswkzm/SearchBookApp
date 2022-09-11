@@ -5,17 +5,22 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchbook.R
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.databinding.FragmentSearchBinding
 import com.example.searchbook.ui.adapter.BookPreviewAdapter
+import com.example.searchbook.ui.adapter.BookSearchLoadStateAdapter
 import com.example.searchbook.ui.adapter.BookSearchPagingAdapter
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
 import com.example.searchbook.util.Constants.SEARCH_BOOK_TIME_DELAY
@@ -41,6 +46,7 @@ class SearchFragment : Fragment() {
 
         initUI()
         searchBooks()
+        setUpLoadState()
         observeViewModel()
     }
 
@@ -50,7 +56,9 @@ class SearchFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-            adapter = bookSearchAdapter
+            adapter = bookSearchAdapter.withLoadStateFooter(
+                footer = BookSearchLoadStateAdapter(bookSearchAdapter::retry)
+            )
         }
 
         // BookDetailFragment로 book 정보 넘기면서 이동
@@ -90,6 +98,37 @@ class SearchFragment : Fragment() {
                 }
             }
             startTime = endtime
+        }
+    }
+
+    private fun setUpLoadState() {
+//         ViewHolder로 아이템에 대한 LoadState가 아닌 RV 전체에 대한 LoadState
+        bookSearchAdapter.addLoadStateListener { combinedLoadStates ->
+            val loadState : LoadStates = combinedLoadStates.source
+            val isListEmpty : Boolean = bookSearchAdapter.itemCount < 1
+                    && loadState.refresh is LoadState.NotLoading
+                    && loadState.append.endOfPaginationReached
+
+            binding.tvEmptyList.isVisible = isListEmpty
+            binding.rvSearchBooks.isVisible = !isListEmpty
+
+            binding.progressBar.isVisible = loadState.refresh is LoadState.Loading
+//
+//            binding.btnRetry.isVisible = loadState.refresh is LoadState.Error
+//                    || loadState.append is LoadState.Error
+//                    || loadState.prepend is LoadState.Error
+//
+//            val errorState : LoadState.Error? = loadState.append as? LoadState.Error
+//                ?: loadState.prepend as? LoadState.Error
+//                ?: loadState.refresh as? LoadState.Error
+//
+//            errorState?.let {
+//                Toast.makeText(requireContext(), it.error.message, Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//        binding.btnRetry.setOnClickListener {
+//            bookSearchAdapter.retry()
         }
     }
 
