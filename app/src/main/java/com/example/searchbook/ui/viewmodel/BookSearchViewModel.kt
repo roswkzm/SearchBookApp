@@ -3,17 +3,21 @@ package com.example.searchbook.ui.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.work.*
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.SearchResponse
 import com.example.searchbook.repository.BookSearchRepository
+import com.example.searchbook.worker.CacheDeleteWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 
 class BookSearchViewModel(
     private val bookSearchRepository: BookSearchRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val workManager : WorkManager
 ) : ViewModel(){
 
     private val _searchResult = MutableLiveData<SearchResponse>()
@@ -66,6 +70,16 @@ class BookSearchViewModel(
             bookSearchRepository.getSortMode().first()
         }
 
+    fun saveCacheDeleteMode(value : Boolean){
+        viewModelScope.launch(Dispatchers.IO){
+            bookSearchRepository.saveCacheDeleteMode(value)
+        }
+    }
+
+    suspend fun getCacheDeleteMode() = withContext(Dispatchers.IO){
+        bookSearchRepository.getCacheDeleteMode().first()
+    }
+
     val favoritePagingBooks : StateFlow<PagingData<Book>> =
         bookSearchRepository.getFavoritePagingBooks().cachedIn(viewModelScope)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PagingData.empty())
@@ -85,7 +99,31 @@ class BookSearchViewModel(
         }
     }
 
+    // WorkManager
+    fun setWork(){
+        // 제약조건
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        // 15분에 한번씩 수행되도록
+        val workRequest = PeriodicWorkRequestBuilder<CacheDeleteWorker>(15, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            WORKER_KEY, ExistingPeriodicWorkPolicy.REPLACE, workRequest
+        )
+    }
+
+    fun deleteWork() = workManager.cancelUniqueWork(WORKER_KEY)
+
+    fun getWorkStatus() : LiveData<MutableList<WorkInfo>> = workManager.getWorkInfosForUniqueWorkLiveData(
+        WORKER_KEY)
+
     companion object{
         private const val SAVE_STATE_KEY = "query"
+        private const val WORKER_KEY = "cache_worker"
     }
 }

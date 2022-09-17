@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.WorkManager
 import com.example.searchbook.R
 import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.databinding.ActivityMainBinding
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController : NavController
 
     private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
+    private val workManager = WorkManager.getInstance(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         val database = AppDatabase.getInstance(this)
         val bookSearchRepository = BookSearchRepositoryImpl(database, dataStore)
-        val factory = BookSearchViewModelFactory(bookSearchRepository, this)
+        val factory = BookSearchViewModelFactory(bookSearchRepository, workManager, this)
         viewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 
         setContentView(binding.root)

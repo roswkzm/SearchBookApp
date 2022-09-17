@@ -1,10 +1,7 @@
 package com.example.searchbook.repository
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -12,6 +9,7 @@ import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.SearchResponse
 import com.example.searchbook.network.RetrofitInstance.api
+import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.CACHE_DELETE_MODE
 import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
 import com.example.searchbook.util.Constants.PAGING_SIZE
 import com.example.searchbook.util.Sort
@@ -50,6 +48,7 @@ class BookSearchRepositoryImpl(
     // DateStore
     private object PreferencesKeys{
         val SORT_MODE = stringPreferencesKey("sort_mode")
+        val CACHE_DELETE_MODE = booleanPreferencesKey("cache_delete_mode")
     }
 
     override suspend fun saveSortMode(mode: String) {
@@ -69,6 +68,26 @@ class BookSearchRepositoryImpl(
         }
             .map { perfs ->
                 perfs[SORT_MODE] ?: Sort.ACCURACY.value
+            }
+    }
+
+    override suspend fun saveCacheDeleteMode(mode: Boolean) {
+        dataStore.edit { perfs ->
+            perfs[CACHE_DELETE_MODE] = mode
+        }
+    }
+
+    override suspend fun getCacheDeleteMode(): Flow<Boolean> {
+        return dataStore.data.catch { exception ->
+            if (exception is IOException){
+                exception.printStackTrace()
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+            .map { perfs ->
+                perfs[CACHE_DELETE_MODE] ?: false
             }
     }
 
