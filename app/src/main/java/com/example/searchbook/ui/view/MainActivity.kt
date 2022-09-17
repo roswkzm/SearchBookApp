@@ -1,7 +1,6 @@
 package com.example.searchbook.ui.view
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
@@ -9,14 +8,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.searchbook.R
 import com.example.searchbook.databinding.ActivityMainBinding
-import com.example.searchbook.ui.viewmodel.BookSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private val viewModel by viewModels<BookSearchViewModel>()
     private lateinit var navController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

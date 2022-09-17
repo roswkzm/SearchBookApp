@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentFavoriteBinding
 import com.example.searchbook.ui.adapter.BookSearchPagingAdapter
-import com.example.searchbook.ui.viewmodel.BookSearchViewModel
+import com.example.searchbook.ui.viewmodel.FavoriteViewModel
 import com.example.searchbook.util.collectLatestStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +26,7 @@ class FavoriteFragment : Fragment() {
     private var _binding : FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
+    private val favoriteViewModel by viewModels<FavoriteViewModel>()
     private lateinit var bookSearchAdapter: BookSearchPagingAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,7 +50,7 @@ class FavoriteFragment : Fragment() {
 //        }
 
         // 확장 함수로 사용
-        collectLatestStateFlow(bookSearchViewModel.favoritePagingBooks){
+        collectLatestStateFlow(favoriteViewModel.favoritePagingBooks){
             bookSearchAdapter.submitData(it)
         }
     }
@@ -95,7 +95,7 @@ class FavoriteFragment : Fragment() {
 //                Toast.makeText(context, "Book has Delete", Toast.LENGTH_SHORT).show()
                 val pagedBook = bookSearchAdapter.peek(position)
                 pagedBook?.let { book ->
-                    bookSearchViewModel.deleteBook(book)
+                    favoriteViewModel.deleteBook(book)
                     Toast.makeText(context, "Book has Delete", Toast.LENGTH_SHORT).show()
                 }
             }

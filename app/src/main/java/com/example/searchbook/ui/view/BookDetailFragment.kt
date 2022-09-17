@@ -9,11 +9,11 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentBookDetailBinding
-import com.example.searchbook.ui.viewmodel.BookSearchViewModel
+import com.example.searchbook.ui.viewmodel.BookDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +23,7 @@ class BookDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args by navArgs<BookDetailFragmentArgs>()
-    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
+    private val bookDetailViewModel by viewModels<BookDetailViewModel>()
 
     private val mWebView by lazy { binding.webView }
 
@@ -45,7 +45,7 @@ class BookDetailFragment : Fragment() {
         backPressEvent()
 
         binding.btnFavorite.setOnClickListener {
-            bookSearchViewModel.saveBook(book)
+            bookDetailViewModel.saveBook(book)
             Toast.makeText(context, "Favorite Book Save", Toast.LENGTH_SHORT).show()
         }
     }
