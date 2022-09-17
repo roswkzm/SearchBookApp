@@ -17,20 +17,4 @@ import com.example.searchbook.data.model.Book
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bookSearchDao() : BookSearchDao
-
-    companion object{
-        @Volatile
-        private var instance : AppDatabase? = null
-
-        private fun buildDatabase(context : Context) : AppDatabase{
-            return Room.databaseBuilder(context, AppDatabase::class.java, "favorite-books")
-                .build()
-        }
-
-        fun getInstance(context : Context) : AppDatabase{
-            return instance ?: synchronized(this){
-                instance ?: buildDatabase(context).also { instance = it }
-            }
-        }
-    }
 }

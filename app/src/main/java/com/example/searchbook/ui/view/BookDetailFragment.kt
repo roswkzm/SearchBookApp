@@ -1,6 +1,5 @@
 package com.example.searchbook.ui.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -8,23 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgs
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentBookDetailBinding
-import com.example.searchbook.databinding.FragmentSearchBinding
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookDetailFragment : Fragment() {
 
     private var _binding : FragmentBookDetailBinding? = null
     private val binding get() = _binding!!
 
     private val args by navArgs<BookDetailFragmentArgs>()
-    private lateinit var bookSearchViewModel: BookSearchViewModel
+    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
 
     private val mWebView by lazy { binding.webView }
 
@@ -35,7 +34,6 @@ class BookDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bookSearchViewModel = (activity as MainActivity).viewModel
 
         val book = args.book
         mWebView.apply {

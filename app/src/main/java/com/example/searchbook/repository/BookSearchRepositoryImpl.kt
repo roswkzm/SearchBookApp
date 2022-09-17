@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.SearchResponse
-import com.example.searchbook.network.RetrofitInstance.api
+import com.example.searchbook.network.BookSearchService
 import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.CACHE_DELETE_MODE
 import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
 import com.example.searchbook.util.Constants.PAGING_SIZE
@@ -18,10 +18,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class BookSearchRepositoryImpl(
+@Singleton
+class BookSearchRepositoryImpl @Inject constructor(
     private val db : AppDatabase,
-    private val dataStore : DataStore<Preferences>
+    private val dataStore : DataStore<Preferences>,
+    private val api : BookSearchService
 ) : BookSearchRepository {
 
     override suspend fun SearchBooks(
@@ -105,7 +109,7 @@ class BookSearchRepositoryImpl(
     }
 
     override fun searchBooksPaging(query: String, sort: String): Flow<PagingData<Book>> {
-        val pagingSourceFactory = { BookSearchPagingSource(query, sort) }
+        val pagingSourceFactory = { BookSearchPagingSource(api, query, sort) }
         return Pager(
             config = PagingConfig(
                 pageSize = PAGING_SIZE,

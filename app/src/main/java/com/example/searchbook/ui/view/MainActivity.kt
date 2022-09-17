@@ -1,47 +1,29 @@
 package com.example.searchbook.ui.view
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.WorkManager
 import com.example.searchbook.R
-import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.databinding.ActivityMainBinding
-import com.example.searchbook.repository.BookSearchRepositoryImpl
 import com.example.searchbook.ui.viewmodel.BookSearchViewModel
-import com.example.searchbook.ui.viewmodel.BookSearchViewModelFactory
-import com.example.searchbook.util.Constants.DATASTORE_NAME
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    lateinit var viewModel : BookSearchViewModel
+    private val viewModel by viewModels<BookSearchViewModel>()
     private lateinit var navController : NavController
-
-    private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
-    private val workManager = WorkManager.getInstance(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setUpJetpackNavigation()
-
-        val database = AppDatabase.getInstance(this)
-        val bookSearchRepository = BookSearchRepositoryImpl(database, dataStore)
-        val factory = BookSearchViewModelFactory(bookSearchRepository, workManager, this)
-        viewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
-
-        setContentView(binding.root)
     }
 
     private fun setUpJetpackNavigation(){
