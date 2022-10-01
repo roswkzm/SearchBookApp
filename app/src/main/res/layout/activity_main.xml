@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/search_kakao"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
+            app:layout_constraintBottom_toTopOf="@+id/search_naver"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/kakao_logo"
+            android:scaleType="fitXY"/>
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/booksearch_nav_host_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/booksearch_nav_graph"/>
-
-        </FrameLayout>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav_view"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
+        <ImageView
+            android:id="@+id/search_naver"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_navigation_menu"/>
+            app:layout_constraintTop_toBottomOf="@+id/search_kakao"
+            android:src="@drawable/naver_logo"
+            android:scaleType="fitXY"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
