@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_book_preview.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_load_state.xml" value="0.15260416666666668" />
+        <entry key="app/src/main/res/layout/item_naver_book_preview.xml" value="0.335" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.26944444444444443" />
         <entry key="app/src/main/res/menu/kakao_bottom_navigation_menu.xml" value="0.1578125" />
         <entry key="app/src/main/res/menu/naver_bottom_navigation_menu.xml" value="0.16041666666666668" />

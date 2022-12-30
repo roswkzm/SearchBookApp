@@ -11,6 +11,12 @@ fun TextView.bindBookAuthor(authorList : List<String>){
     this.text = author
 }
 
+@BindingAdapter("naverBookAuthor")
+fun TextView.bindBookAuthor(authors : String){
+    this.text = authors
+}
+
+
 @BindingAdapter("bookMakeTime")
 fun TextView.bindBookMakeTime(dateTime : String){
     val formatDateTime = if (dateTime.isNotEmpty()) dateTime.substring(0, 10) else ""
