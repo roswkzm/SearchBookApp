@@ -1,7 +1,9 @@
 package com.example.searchbook.di
 
-import com.example.searchbook.repository.BookSearchRepository
-import com.example.searchbook.repository.BookSearchRepositoryImpl
+import com.example.searchbook.repository.kakao.BookSearchRepository
+import com.example.searchbook.repository.kakao.BookSearchRepositoryImpl
+import com.example.searchbook.repository.naver.NaverBookSearchRepository
+import com.example.searchbook.repository.naver.NaverBookSearchRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindBookSearchRepository(
         bookSearchRepositoryImpl : BookSearchRepositoryImpl
     ) : BookSearchRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindNaverSearchRepository(
+        naverBookSearchRepositoryImpl: NaverBookSearchRepositoryImpl
+    ) : NaverBookSearchRepository
 }

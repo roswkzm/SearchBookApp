@@ -1,4 +1,4 @@
-package com.example.searchbook.repository
+package com.example.searchbook.repository.kakao
 
 import androidx.paging.PagingData
 import com.example.searchbook.data.model.Book

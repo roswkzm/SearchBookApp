@@ -8,7 +8,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.searchbook.R
 import com.example.searchbook.databinding.ActivityNaverBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NaverActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityNaverBinding

@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentNaverSettingsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NaverSettingsFragment : Fragment() {
 
     private var _binding : FragmentNaverSettingsBinding? = null

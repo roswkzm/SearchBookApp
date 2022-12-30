@@ -9,8 +9,10 @@ import androidx.room.Room
 import androidx.work.WorkManager
 import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.network.BookSearchService
+import com.example.searchbook.network.NaverBookSearchService
 import com.example.searchbook.util.Constants.BASE_URL
 import com.example.searchbook.util.Constants.DATASTORE_NAME
+import com.example.searchbook.util.Constants.NAVER_BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,7 +41,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    @KakaoRetrofit
+    fun provideKakaoRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
@@ -49,7 +52,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideBookSearchService(retrofit: Retrofit): BookSearchService {
+    fun provideBookSearchService(@KakaoRetrofit retrofit: Retrofit): BookSearchService {
         return retrofit.create(BookSearchService::class.java)
     }
 
@@ -80,4 +83,21 @@ object AppModule {
     @Provides
     @Singleton
     fun providesCacheDeleteResult() : String = "Cache has delete by Hilt"
+
+    @Provides
+    @Singleton
+    @NaverRetrofit
+    fun provideNaverRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .baseUrl(NAVER_BASE_URL)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNaverBookSearchService(@NaverRetrofit retrofit: Retrofit): NaverBookSearchService {
+        return retrofit.create(NaverBookSearchService::class.java)
+    }
 }

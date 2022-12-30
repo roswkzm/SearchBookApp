@@ -9,7 +9,7 @@ object Constants {
     const val DATASTORE_NAME = "preferences_datastore"
     const val PAGING_SIZE = 15
 
-    const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/book.json"
+    const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/"
     const val NAVER_CLIENT_ID = BuildConfig.naverClientId
     const val NAVER_CLIENT_SECRET = BuildConfig.naverClientSecret
 }

@@ -1,4 +1,4 @@
-package com.example.searchbook.repository
+package com.example.searchbook.repository.kakao
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
@@ -9,8 +9,8 @@ import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.SearchResponse
 import com.example.searchbook.network.BookSearchService
-import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.CACHE_DELETE_MODE
-import com.example.searchbook.repository.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
+import com.example.searchbook.repository.kakao.BookSearchRepositoryImpl.PreferencesKeys.CACHE_DELETE_MODE
+import com.example.searchbook.repository.kakao.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
 import com.example.searchbook.util.Constants.PAGING_SIZE
 import com.example.searchbook.util.Sort
 import kotlinx.coroutines.flow.Flow

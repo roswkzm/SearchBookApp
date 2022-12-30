@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentNaverFavoriteBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NaverFavoriteFragment : Fragment() {
 
     private var _binding : FragmentNaverFavoriteBinding? = null

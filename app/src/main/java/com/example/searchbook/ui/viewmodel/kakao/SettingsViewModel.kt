@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
-import com.example.searchbook.repository.BookSearchRepository
+import com.example.searchbook.repository.kakao.BookSearchRepository
 import com.example.searchbook.worker.CacheDeleteWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
