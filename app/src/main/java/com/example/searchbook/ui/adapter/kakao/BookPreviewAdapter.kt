@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.adapter
+package com.example.searchbook.ui.adapter.kakao
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,9 @@ import com.example.searchbook.R
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.databinding.ItemBookPreviewBinding
 
-class BookPreviewAdapter : ListAdapter<Book, BookPreviewAdapter.BookPreviewViewHolder>(BookDiffCallBack){
+class BookPreviewAdapter : ListAdapter<Book, BookPreviewAdapter.BookPreviewViewHolder>(
+    BookDiffCallBack
+){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookPreviewViewHolder {
         val binding : ItemBookPreviewBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_book_preview, parent, false)

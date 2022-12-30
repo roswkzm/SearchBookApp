@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.viewmodel
+package com.example.searchbook.ui.viewmodel.kakao
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

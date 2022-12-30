@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.view
+package com.example.searchbook.ui.view.kakao
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentFavoriteBinding
-import com.example.searchbook.ui.adapter.BookSearchPagingAdapter
-import com.example.searchbook.ui.viewmodel.FavoriteViewModel
+import com.example.searchbook.ui.adapter.kakao.BookSearchPagingAdapter
+import com.example.searchbook.ui.viewmodel.kakao.FavoriteViewModel
 import com.example.searchbook.util.collectLatestStateFlow
 import dagger.hilt.android.AndroidEntryPoint
 

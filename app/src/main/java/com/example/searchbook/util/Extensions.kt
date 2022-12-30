@@ -3,8 +3,8 @@ package com.example.searchbook.util
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.searchbook.ui.view.FavoriteFragment
-import com.example.searchbook.ui.view.SearchFragment
+import com.example.searchbook.ui.view.kakao.FavoriteFragment
+import com.example.searchbook.ui.view.kakao.SearchFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.view
+package com.example.searchbook.ui.view.kakao
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

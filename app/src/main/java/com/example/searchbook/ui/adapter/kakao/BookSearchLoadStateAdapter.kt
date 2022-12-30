@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.adapter
+package com.example.searchbook.ui.adapter.kakao
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.adapter
+package com.example.searchbook.ui.adapter.kakao
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,9 @@ import com.example.searchbook.R
 import com.example.searchbook.data.model.Book
 import com.example.searchbook.databinding.ItemBookPreviewBinding
 
-class BookSearchPagingAdapter : PagingDataAdapter<Book, BookSearchPagingAdapter.BookPagingViewHolder>(BookDiffCallBack) {
+class BookSearchPagingAdapter : PagingDataAdapter<Book, BookSearchPagingAdapter.BookPagingViewHolder>(
+    BookDiffCallBack
+) {
 
     override fun onBindViewHolder(holder: BookPagingViewHolder, position: Int) {
         val pagedBook = getItem(position)

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_favorite"
-        android:name="com.example.searchbook.ui.view.FavoriteFragment"
+        android:name="com.example.searchbook.ui.view.kakao.FavoriteFragment"
         android:label="@string/favorite" >
         <action
             android:id="@+id/action_fragment_favorite_to_fragment_book_detail"
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_search"
-        android:name="com.example.searchbook.ui.view.SearchFragment"
+        android:name="com.example.searchbook.ui.view.kakao.SearchFragment"
         android:label="@string/search" >
         <action
             android:id="@+id/action_fragment_search_to_fragment_book_detail"
@@ -31,11 +31,11 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_settings"
-        android:name="com.example.searchbook.ui.view.SettingsFragment"
+        android:name="com.example.searchbook.ui.view.kakao.SettingsFragment"
         android:label="@string/settings" />
     <fragment
         android:id="@+id/fragment_book_detail"
-        android:name="com.example.searchbook.ui.view.BookDetailFragment"
+        android:name="com.example.searchbook.ui.view.kakao.BookDetailFragment"
         android:label="@string/book_info" >
         <argument
             android:name="book"

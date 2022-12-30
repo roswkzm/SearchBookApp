@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SearchBook">
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name=".ui.view.kakao.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.view.KakaoActivity"
+            android:name=".ui.view.kakao.KakaoActivity"
             android:exported="true">
         </activity>
 

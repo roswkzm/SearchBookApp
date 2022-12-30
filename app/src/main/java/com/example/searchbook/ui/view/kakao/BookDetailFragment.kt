@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.view
+package com.example.searchbook.ui.view.kakao
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentBookDetailBinding
-import com.example.searchbook.ui.viewmodel.BookDetailViewModel
+import com.example.searchbook.ui.viewmodel.kakao.BookDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

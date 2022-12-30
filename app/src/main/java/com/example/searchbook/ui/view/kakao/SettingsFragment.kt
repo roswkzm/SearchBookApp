@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.view
+package com.example.searchbook.ui.view.kakao
 
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentSettingsBinding
-import com.example.searchbook.ui.viewmodel.SettingsViewModel
+import com.example.searchbook.ui.viewmodel.kakao.SettingsViewModel
 import com.example.searchbook.util.Sort
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
