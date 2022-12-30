@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SearchBook">
         <activity
-            android:name=".ui.view.kakao.MainActivity"
+            android:name=".ui.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +24,11 @@
         </activity>
         <activity
             android:name=".ui.view.kakao.KakaoActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".ui.view.naver.NaverActivity"
+            android:exported="true"></activity>
 
         <provider
             android:name="androidx.startup.InitializationProvider"

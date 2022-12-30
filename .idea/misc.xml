@@ -6,13 +6,19 @@
         <entry key="app/src/main/res/layout/activity_book_detail_fragment.xml" value="0.15364583333333334" />
         <entry key="app/src/main/res/layout/activity_kakao.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/activity_naver.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_book_detail.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.13677811550151975" />
+        <entry key="app/src/main/res/layout/fragment_naver_favorite.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_naver_search.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_naver_settings.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.13677811550151975" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_book_preview.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_load_state.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.26944444444444443" />
+        <entry key="app/src/main/res/menu/kakao_bottom_navigation_menu.xml" value="0.1578125" />
+        <entry key="app/src/main/res/menu/naver_bottom_navigation_menu.xml" value="0.16041666666666668" />
       </map>
     </option>
   </component>
