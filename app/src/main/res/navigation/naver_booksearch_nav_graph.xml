@@ -8,7 +8,15 @@
     <fragment
         android:id="@+id/fragment_naver_search"
         android:name="com.example.searchbook.ui.view.naver.NaverSearchFragment"
-        android:label="@string/search" />
+        android:label="@string/search" >
+        <action
+            android:id="@+id/action_fragment_naver_search_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_naver_favorite"
         android:name="com.example.searchbook.ui.view.naver.NaverFavoriteFragment"
@@ -17,4 +25,17 @@
         android:id="@+id/fragment_naver_settings"
         android:name="com.example.searchbook.ui.view.naver.NaverSettingsFragment"
         android:label="@string/settings" />
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.example.searchbook.ui.view.BookDetailFragment"
+        android:label="BookDetailFragment" >
+        <argument
+            android:name="book"
+            app:argType="com.example.searchbook.data.model.Book"
+            app:nullable="true" />
+        <argument
+            android:name="naverBook"
+            app:argType="com.example.searchbook.data.model.NaverBook"
+            app:nullable="true" />
+    </fragment>
 </navigation>

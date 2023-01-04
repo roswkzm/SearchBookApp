@@ -1,6 +1,7 @@
 package com.example.searchbook.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentBookDetailBinding
@@ -35,19 +37,33 @@ class BookDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val book = args.book
-        mWebView.apply {
-            webViewClient = WebViewClient()
-            settings.javaScriptEnabled = true
-            loadUrl(book.url)
+        val kakaoBook = args.book
+        val naverBook = args.naverBook
+
+        if (kakaoBook != null){
+            mWebView.apply {
+                webViewClient = WebViewClient()
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                loadUrl(kakaoBook.url)
+            }
+
+            binding.btnFavorite.setOnClickListener {
+                bookDetailViewModel.saveBook(kakaoBook)
+                Toast.makeText(context, "Favorite Book Save", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            mWebView.apply {
+                webViewClient = WebViewClient()
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                loadUrl(naverBook!!.link)
+            }
         }
 
         backPressEvent()
 
-        binding.btnFavorite.setOnClickListener {
-            bookDetailViewModel.saveBook(book)
-            Toast.makeText(context, "Favorite Book Save", Toast.LENGTH_SHORT).show()
-        }
+
     }
 
     private fun backPressEvent(){

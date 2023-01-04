@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchbook.R
@@ -55,6 +56,11 @@ class NaverSearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             adapter = bookAdapter
+        }
+
+        bookAdapter.setOnItemClickListener {
+            val action = NaverSearchFragmentDirections.actionFragmentNaverSearchToBookDetailFragment(null, it)
+            findNavController().navigate(action)
         }
     }
 

@@ -1,9 +1,12 @@
 package com.example.searchbook.data.model
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class NaverBook(
 
@@ -33,4 +36,4 @@ data class NaverBook(
 
     @Json(name = "title")
     val title: String       // 책 제목
-)
+) : Parcelable

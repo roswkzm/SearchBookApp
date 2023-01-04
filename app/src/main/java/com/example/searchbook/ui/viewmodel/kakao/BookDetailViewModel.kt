@@ -3,6 +3,7 @@ package com.example.searchbook.ui.viewmodel.kakao
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.searchbook.data.model.Book
+import com.example.searchbook.data.model.NaverBook
 import com.example.searchbook.repository.kakao.BookSearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

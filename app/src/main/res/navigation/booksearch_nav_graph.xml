@@ -39,6 +39,11 @@
         android:label="@string/book_info" >
         <argument
             android:name="book"
-            app:argType="com.example.searchbook.data.model.Book" />
+            app:argType="com.example.searchbook.data.model.Book"
+            app:nullable="true" />
+        <argument
+            android:name="naverBook"
+            app:argType="com.example.searchbook.data.model.NaverBook"
+            app:nullable="true" />
     </fragment>
 </navigation>

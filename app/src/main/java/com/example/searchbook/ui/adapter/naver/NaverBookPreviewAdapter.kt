@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchbook.R
+import com.example.searchbook.data.model.Book
 import com.example.searchbook.data.model.NaverBook
 import com.example.searchbook.databinding.ItemNaverBookPreviewBinding
 
@@ -22,6 +23,14 @@ class NaverBookPreviewAdapter : ListAdapter<NaverBook, NaverBookPreviewAdapter.P
     override fun onBindViewHolder(holder: PreviewViewHolder, position: Int) {
         val book = currentList[position]
         holder.bind(book)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let { it(book) }
+        }
+    }
+
+    private var onItemClickListener : ((NaverBook) -> Unit)? = null
+    fun setOnItemClickListener(listener: (NaverBook) -> Unit){
+        onItemClickListener = listener
     }
 
     class PreviewViewHolder(

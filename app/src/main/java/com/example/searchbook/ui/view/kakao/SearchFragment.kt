@@ -61,7 +61,7 @@ class SearchFragment : Fragment() {
 
         // BookDetailFragment로 book 정보 넘기면서 이동
         bookSearchAdapter.setOnItemClickListener {
-            val action = SearchFragmentDirections.actionFragmentSearchToFragmentBookDetail(it)
+            val action = SearchFragmentDirections.actionFragmentSearchToFragmentBookDetail(it, null)
             findNavController().navigate(action)
         }
     }

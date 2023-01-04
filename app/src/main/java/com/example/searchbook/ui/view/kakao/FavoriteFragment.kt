@@ -66,7 +66,7 @@ class FavoriteFragment : Fragment() {
 
         // BookDetailFragment로 book 정보 넘기면서 이동
         bookSearchAdapter.setOnItemClickListener {
-            val action = FavoriteFragmentDirections.actionFragmentFavoriteToFragmentBookDetail(it)
+            val action = FavoriteFragmentDirections.actionFragmentFavoriteToFragmentBookDetail(it, null)
             findNavController().navigate(action)
         }
     }
