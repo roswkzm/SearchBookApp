@@ -59,6 +59,11 @@ class BookDetailFragment : Fragment() {
                 settings.domStorageEnabled = true
                 loadUrl(naverBook!!.link)
             }
+
+            binding.btnFavorite.setOnClickListener {
+                bookDetailViewModel.saveNaverBook(naverBook!!)
+                Toast.makeText(context, "Favorite Book Save", Toast.LENGTH_SHORT).show()
+            }
         }
 
         backPressEvent()

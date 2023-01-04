@@ -41,12 +41,15 @@ class NaverSearchFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_naver_search, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initUi()
         searchBooks()
         subscribeUi()
-
-        return binding.root
     }
 
     private fun initUi(){

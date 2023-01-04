@@ -2,12 +2,15 @@ package com.example.searchbook.data.model
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+@Entity(tableName = "naverBook")
 data class NaverBook(
 
     @Json(name = "author")
@@ -22,6 +25,7 @@ data class NaverBook(
     @Json(name = "image")
     val image: String,      // 섬네일 이미지의 URL
 
+    @PrimaryKey(autoGenerate = false)
     @Json(name = "isbn")
     val isbn: String,       // 국제 표준 도서번호
 

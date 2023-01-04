@@ -20,7 +20,11 @@
     <fragment
         android:id="@+id/fragment_naver_favorite"
         android:name="com.example.searchbook.ui.view.naver.NaverFavoriteFragment"
-        android:label="@string/favorite" />
+        android:label="@string/favorite" >
+        <action
+            android:id="@+id/action_fragment_naver_favorite_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_naver_settings"
         android:name="com.example.searchbook.ui.view.naver.NaverSettingsFragment"
