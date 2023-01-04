@@ -41,7 +41,12 @@ class NaverFavoriteFragment : Fragment() {
         setupTouchHelper(view)
 
         collectLatestStateFlow(favoriteViewModel.favoriteBooks){
-            favoriteAdapter.submitList(it)
+            if (it.isEmpty()){
+                binding.tvEmptyList.visibility = View.VISIBLE
+            } else {
+                favoriteAdapter.submitList(it)
+                binding.tvEmptyList.visibility = View.GONE
+            }
         }
     }
 
