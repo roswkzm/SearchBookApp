@@ -11,6 +11,15 @@ fun TextView.bindBookAuthor(authorList : List<String>){
     this.text = author
 }
 
+@BindingAdapter("bookDiscount")
+fun TextView.bindBookDiscount(discount : String){
+    if (discount.equals("0")){
+        this.text = "Sold Out"
+    } else{
+        this.text = discount
+    }
+}
+
 @BindingAdapter("naverBookAuthor")
 fun TextView.bindBookAuthor(authors : String){
     this.text = authors

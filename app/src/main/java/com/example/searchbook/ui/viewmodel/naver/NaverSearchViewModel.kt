@@ -3,8 +3,13 @@ package com.example.searchbook.ui.viewmodel.naver
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.searchbook.data.model.NaverSearchResponse
 import com.example.searchbook.repository.naver.NaverBookSearchRepository
+import com.example.searchbook.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,12 +18,19 @@ class NaverSearchViewModel @Inject constructor(
     private val bookSearchRepository: NaverBookSearchRepository
 ) : ViewModel() {
 
-    fun searchBooks() {
+    var _searchBookResult: MutableStateFlow<UiState<NaverSearchResponse>> =
+        MutableStateFlow(UiState.Loading())
+    var searchBookResult: StateFlow<UiState<NaverSearchResponse>> = _searchBookResult
+
+    fun searchBooks(query : String) {
         viewModelScope.launch {
-            val result = bookSearchRepository.SearchNaverBooks("안드로이드", 10, 1, "sim")
-            if (result.isSuccessful){
-                Log.d("ㅎㅇㅎㅇ", result.body().toString())
-            }
+            bookSearchRepository.SearchNaverBooks(query, 10, 1, "sim")
+                .catch { error ->
+                    _searchBookResult.value = UiState.Error(error.message.toString())
+                }
+                .collect { value ->
+                    _searchBookResult.value = value
+                }
         }
     }
 }

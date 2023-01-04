@@ -1,4 +1,4 @@
-package com.example.searchbook.ui.view.kakao
+package com.example.searchbook.ui.view
 
 import android.os.Bundle
 import android.view.KeyEvent

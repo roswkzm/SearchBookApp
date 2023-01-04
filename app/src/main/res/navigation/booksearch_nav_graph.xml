@@ -35,7 +35,7 @@
         android:label="@string/settings" />
     <fragment
         android:id="@+id/fragment_book_detail"
-        android:name="com.example.searchbook.ui.view.kakao.BookDetailFragment"
+        android:name="com.example.searchbook.ui.view.BookDetailFragment"
         android:label="@string/book_info" >
         <argument
             android:name="book"
