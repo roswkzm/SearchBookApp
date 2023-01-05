@@ -18,3 +18,8 @@ enum class Sort(val value : String){
     ACCURACY("accuracy"),
     LATEST("latest")
 }
+
+enum class NaverSort(val value : String) {
+    SIM("sim"),
+    DATE("date")
+}

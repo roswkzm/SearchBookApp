@@ -20,4 +20,8 @@ interface NaverBookSearchRepository {
     suspend fun deleteBook(book: NaverBook)
 
     fun getFavoriteBooks() : Flow<List<NaverBook>>
+
+    suspend fun setSortMode(value : String)
+
+    suspend fun getSortMode() : Flow<String>
 }

@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,13 +25,14 @@ class NaverSearchViewModel @Inject constructor(
 
     fun searchBooks(query : String) {
         viewModelScope.launch {
-            bookSearchRepository.SearchNaverBooks(query, 10, 1, "sim")
+            bookSearchRepository.SearchNaverBooks(query, 10, 1, bookSearchRepository.getSortMode().first())
                 .catch { error ->
                     _searchBookResult.value = UiState.Error(error.message.toString())
                 }
                 .collect { value ->
                     _searchBookResult.value = value
                 }
+
         }
     }
 }

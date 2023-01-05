@@ -1,20 +1,28 @@
 package com.example.searchbook.repository.naver
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.data.model.NaverBook
 import com.example.searchbook.data.model.NaverSearchResponse
 import com.example.searchbook.network.NaverBookSearchService
+import com.example.searchbook.repository.naver.NaverBookSearchRepositoryImpl.PreferencesKeys.NAVER_SORT_MODE
+import com.example.searchbook.util.NaverSort
 import com.example.searchbook.util.UiState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NaverBookSearchRepositoryImpl @Inject constructor(
     private val api : NaverBookSearchService,
-    private val db : AppDatabase
+    private val db : AppDatabase,
+    private val dataStore : DataStore<Preferences>
 ) : NaverBookSearchRepository {
 
     override suspend fun SearchNaverBooks(
@@ -51,5 +59,28 @@ class NaverBookSearchRepositoryImpl @Inject constructor(
 
     override fun getFavoriteBooks(): Flow<List<NaverBook>> {
         return db.naverBookSearchDao().getFavoriteBooks()
+    }
+
+    private object PreferencesKeys{
+        val NAVER_SORT_MODE = stringPreferencesKey("naver_sort_mode")
+    }
+
+    override suspend fun setSortMode(value: String) {
+        dataStore.edit { perfs ->
+            perfs[NAVER_SORT_MODE] = value
+        }
+    }
+
+    override suspend fun getSortMode(): Flow<String> {
+        return dataStore.data.catch { exception ->
+            if (exception is IOException){
+                exception.printStackTrace()
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        } .map { perfs ->
+            perfs[NAVER_SORT_MODE] ?: NaverSort.SIM.value
+        }
     }
 }
