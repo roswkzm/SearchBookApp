@@ -1,6 +1,5 @@
 package com.example.searchbook.ui.viewmodel.naver
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.searchbook.data.model.NaverSearchResponse
@@ -25,7 +24,7 @@ class NaverSearchViewModel @Inject constructor(
 
     fun searchBooks(query : String) {
         viewModelScope.launch {
-            bookSearchRepository.SearchNaverBooks(query, 10, 1, bookSearchRepository.getSortMode().first())
+            bookSearchRepository.searchNaverBooks(query, 10, 1, bookSearchRepository.getSortMode().first())
                 .catch { error ->
                     _searchBookResult.value = UiState.Error(error.message.toString())
                 }
@@ -34,5 +33,6 @@ class NaverSearchViewModel @Inject constructor(
                 }
 
         }
+
     }
 }

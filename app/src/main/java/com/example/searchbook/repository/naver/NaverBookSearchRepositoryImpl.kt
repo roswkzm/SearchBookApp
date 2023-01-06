@@ -1,15 +1,20 @@
 package com.example.searchbook.repository.naver
 
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.searchbook.data.db.AppDatabase
 import com.example.searchbook.data.model.NaverBook
 import com.example.searchbook.data.model.NaverSearchResponse
 import com.example.searchbook.network.NaverBookSearchService
 import com.example.searchbook.repository.naver.NaverBookSearchRepositoryImpl.PreferencesKeys.NAVER_SORT_MODE
+import com.example.searchbook.util.Constants.PAGING_SIZE
 import com.example.searchbook.util.NaverSort
 import com.example.searchbook.util.UiState
 import kotlinx.coroutines.flow.*
@@ -25,7 +30,7 @@ class NaverBookSearchRepositoryImpl @Inject constructor(
     private val dataStore : DataStore<Preferences>
 ) : NaverBookSearchRepository {
 
-    override suspend fun SearchNaverBooks(
+    override suspend fun searchNaverBooks(
         query: String,
         display: Int,
         start: Int,
@@ -82,5 +87,17 @@ class NaverBookSearchRepositoryImpl @Inject constructor(
         } .map { perfs ->
             perfs[NAVER_SORT_MODE] ?: NaverSort.SIM.value
         }
+    }
+
+    override fun getFavoritePagingBooks(): Flow<PagingData<NaverBook>> {
+        val pagingSourceFactory = {db.naverBookSearchDao().getFavoritePagingBooks()}
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGING_SIZE,
+                enablePlaceholders = false,
+                maxSize = PAGING_SIZE * 3
+            ),
+            pagingSourceFactory = pagingSourceFactory,
+        ).flow
     }
 }

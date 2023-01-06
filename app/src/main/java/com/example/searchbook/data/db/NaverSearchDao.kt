@@ -1,5 +1,6 @@
 package com.example.searchbook.data.db
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -19,4 +20,7 @@ interface NaverSearchDao {
 
     @Query("SELECT * FROM naverBook")
     fun getFavoriteBooks() : Flow<List<NaverBook>>
+
+    @Query("SELECT * FROM naverBook")
+    fun getFavoritePagingBooks() : PagingSource<Int, NaverBook>
 }

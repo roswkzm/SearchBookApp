@@ -1,5 +1,6 @@
 package com.example.searchbook.repository.naver
 
+import androidx.paging.PagingData
 import com.example.searchbook.data.model.NaverBook
 import com.example.searchbook.data.model.NaverSearchResponse
 import com.example.searchbook.util.UiState
@@ -8,7 +9,7 @@ import retrofit2.Response
 
 interface NaverBookSearchRepository {
 
-    suspend fun SearchNaverBooks(
+    suspend fun searchNaverBooks(
         query : String,
         display : Int,
         start : Int,
@@ -24,4 +25,6 @@ interface NaverBookSearchRepository {
     suspend fun setSortMode(value : String)
 
     suspend fun getSortMode() : Flow<String>
+
+    fun getFavoritePagingBooks() : Flow<PagingData<NaverBook>>
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentNaverFavoriteBinding
 import com.example.searchbook.repository.naver.NaverBookSearchRepository
 import com.example.searchbook.ui.adapter.naver.NaverBookPreviewAdapter
+import com.example.searchbook.ui.adapter.naver.NaverBookSearchPagingAdapter
 import com.example.searchbook.ui.viewmodel.naver.NaverFavoriteViewModel
 import com.example.searchbook.util.collectLatestStateFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +29,7 @@ class NaverFavoriteFragment : Fragment() {
     private var _binding : FragmentNaverFavoriteBinding? = null
     private val binding get() = _binding!!
     private val favoriteViewModel by viewModels<NaverFavoriteViewModel>()
-    private lateinit var favoriteAdapter : NaverBookPreviewAdapter
+    private lateinit var favoriteAdapter : NaverBookSearchPagingAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater,R.layout.fragment_naver_favorite, container, false)
@@ -40,18 +42,14 @@ class NaverFavoriteFragment : Fragment() {
         initUi()
         setupTouchHelper(view)
 
-        collectLatestStateFlow(favoriteViewModel.favoriteBooks){
-            if (it.isEmpty()){
-                binding.tvEmptyList.visibility = View.VISIBLE
-            } else {
-                favoriteAdapter.submitList(it)
+        collectLatestStateFlow(favoriteViewModel.favoritePagingBooks){
+                favoriteAdapter.submitData(it)
                 binding.tvEmptyList.visibility = View.GONE
-            }
         }
     }
 
     private fun initUi(){
-        favoriteAdapter = NaverBookPreviewAdapter()
+        favoriteAdapter = NaverBookSearchPagingAdapter()
         binding.rvFavoriteBook.apply {
             adapter = favoriteAdapter
             setHasFixedSize(true)
@@ -79,8 +77,10 @@ class NaverFavoriteFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                val book = favoriteAdapter.currentList[position]
-                favoriteViewModel.deleteBook(book)
+                val pagedBook = favoriteAdapter.peek(position)
+                pagedBook?.let { book ->
+                    favoriteViewModel.deleteBook(book)
+                }
                 Toast.makeText(context, "Book has Delete", Toast.LENGTH_SHORT).show()
             }
         }
