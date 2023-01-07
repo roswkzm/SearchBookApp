@@ -100,4 +100,17 @@ class NaverBookSearchRepositoryImpl @Inject constructor(
             pagingSourceFactory = pagingSourceFactory,
         ).flow
     }
+
+    override fun getSearchBookPaging(query: String, sort: String): Flow<PagingData<NaverBook>> {
+        val pagingSourceFactory = {NaverBookSearchPagingSource(api, query, sort)}
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGING_SIZE,
+                enablePlaceholders = false,
+                maxSize = PAGING_SIZE * 3
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
 }

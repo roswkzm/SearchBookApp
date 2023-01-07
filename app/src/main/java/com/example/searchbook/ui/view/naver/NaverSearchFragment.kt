@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchbook.R
 import com.example.searchbook.databinding.FragmentNaverSearchBinding
 import com.example.searchbook.ui.adapter.naver.NaverBookPreviewAdapter
+import com.example.searchbook.ui.adapter.naver.NaverBookSearchPagingAdapter
 import com.example.searchbook.ui.viewmodel.naver.NaverSearchViewModel
 import com.example.searchbook.util.Constants.SEARCH_BOOK_TIME_DELAY
 import com.example.searchbook.util.UiState
@@ -35,7 +36,8 @@ class NaverSearchFragment : Fragment() {
 
     private var _binding : FragmentNaverSearchBinding? = null
     private val binding get() = _binding!!
-    private lateinit var bookAdapter : NaverBookPreviewAdapter
+//    private lateinit var bookAdapter : NaverBookPreviewAdapter
+    private lateinit var bookAdapter : NaverBookSearchPagingAdapter
 
     private val viewModel by viewModels<NaverSearchViewModel>()
 
@@ -53,7 +55,8 @@ class NaverSearchFragment : Fragment() {
     }
 
     private fun initUi(){
-        bookAdapter = NaverBookPreviewAdapter()
+//        bookAdapter = NaverBookPreviewAdapter()
+        bookAdapter = NaverBookSearchPagingAdapter()
         binding.rvSearchBooks.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -68,20 +71,24 @@ class NaverSearchFragment : Fragment() {
     }
 
     private fun subscribeUi() {
-        collectLatestStateFlow(viewModel.searchBookResult){
-            when(it) {
-                is UiState.Success -> {
-                    bookAdapter.submitList(it.data?.items)
-                    binding.progressBar.isVisible = false
-                }
-                is UiState.Error -> {
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                    binding.progressBar.isVisible = false
-                }
-                is UiState.Loading -> {
-                    binding.progressBar.isVisible = !binding.etSearch.text.isNullOrEmpty()
-                }
-            }
+//        collectLatestStateFlow(viewModel.searchBookResult){
+//            when(it) {
+//                is UiState.Success -> {
+//                    bookAdapter.submitList(it.data?.items)
+//                    binding.progressBar.isVisible = false
+//                }
+//                is UiState.Error -> {
+//                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+//                    binding.progressBar.isVisible = false
+//                }
+//                is UiState.Loading -> {
+//                    binding.progressBar.isVisible = !binding.etSearch.text.isNullOrEmpty()
+//                }
+//            }
+//        }
+
+        collectLatestStateFlow(viewModel.searchPagingResult){
+            bookAdapter.submitData(it)
         }
     }
 
@@ -95,7 +102,8 @@ class NaverSearchFragment : Fragment() {
                 text.let {
                     val query = it.toString().trim()
                     if (query.isNotEmpty()){
-                        viewModel.searchBooks(query)
+//                        viewModel.searchBooks(query)
+                        viewModel.searchBooksPaging(query)
                     }
                 }
             }

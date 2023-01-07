@@ -27,4 +27,6 @@ interface NaverBookSearchRepository {
     suspend fun getSortMode() : Flow<String>
 
     fun getFavoritePagingBooks() : Flow<PagingData<NaverBook>>
+
+    fun getSearchBookPaging(query: String, sort: String) : Flow<PagingData<NaverBook>>
 }
