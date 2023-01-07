@@ -54,14 +54,42 @@
                 app:bookAuthor="@{bookInfo.authors}"
                 tools:text="AUTHOR" />
 
-            <TextView
-                android:id="@+id/tv_preview_datatime"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                app:bookMakeTime="@{bookInfo.datetime}"
-                tools:text="2022-07-30" />
+                android:orientation="horizontal">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_preview_datatime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:bookMakeTime="@{bookInfo.datetime}"
+                        tools:text="2022-07-30" />
+
+                    <TextView
+                        android:id="@+id/tv_preview_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="#FF4081"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="14sp"
+                        app:bookPrice="@{bookInfo.price}"
+                        tools:text="30000" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

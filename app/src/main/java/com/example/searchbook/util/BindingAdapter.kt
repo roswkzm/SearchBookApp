@@ -11,12 +11,17 @@ fun TextView.bindBookAuthor(authorList : List<String>){
     this.text = author
 }
 
+@BindingAdapter("bookPrice")
+fun TextView.bindBookPrice(price : Int){
+    this.text = "₩${price}"
+}
+
 @BindingAdapter("bookDiscount")
 fun TextView.bindBookDiscount(discount : String){
     if (discount.equals("0")){
         this.text = "Sold Out"
     } else{
-        this.text = discount
+        this.text = "₩${discount}"
     }
 }
 
