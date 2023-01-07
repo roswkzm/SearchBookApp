@@ -33,6 +33,7 @@
             android:id="@+id/naver_bottom_nav_view"
             android:layout_width="0dp"
             android:layout_height="56dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
